@@ -1,0 +1,29 @@
+{
+    "homescreen":{
+        "eventpitch":[
+            "ELEVATING",
+            "BUSINESS LEADERS",
+            "IN THE GREATER TORONTO AREA"
+        ],
+        "eventdate":[
+            "WED. MAY 6, 2020",
+            "Mississauga Convention Centre",
+            "8:30 am - 6:30 pm"
+        ]
+    },
+    "about": {
+        "aboutEvent":
+        [
+            "In its 10th year, #TECONF has been the prominent event in the Greater Toronto Area for empowering and connecting local Entrepreneurs.",
+            "We take pride in the community of Entrepreneurs we have built over the years and look forward to continuing to assist organizations in building their businesses through connections made through our events.",
+            "Soliciting other attendees/exhibitors ('Suitcasing') will not be permitted at the event."
+        ]
+    },
+    "socialmedia":{
+        "facebook": "https://www.facebook.com/groups/torontoentrepreneurs/",
+        "twitter": "https://twitter.com/TOEntrepreneur",
+        "instagram": "https://www.instagram.com/toronto_entrepreneurs/",
+        "linkedin": "https://www.linkedin.com/groups/3851905/",
+        "youtube": "https://www.youtube.com/watch?v=4fDqoUmmGjM"
+    }
+}
