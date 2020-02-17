@@ -7,35 +7,38 @@ import facebook from '../assets/images/facebook.png';
 import linkedin from '../assets/images/linkedin.png';
 import youtube from '../assets/images/youtube.png';
 
+import home from '../dbstore/home.json';
+const socialmedia = home.socialmedia;
+
 const SocialMidia = props => {
     return (
         <View style={styles.SocialMidiaView}>
 
-            <TouchableHighlight onPress={() => Linking.openURL('https://www.facebook.com/groups/torontoentrepreneurs/')}>
+            <TouchableHighlight onPress={()=> _linkPressed({"link":"fb"}) }>
                 <Image
                     source={facebook}
                 />
             </TouchableHighlight>
 
-            <TouchableHighlight onPress={() => Linking.openURL('https://twitter.com/TOEntrepreneur')}>
+            <TouchableHighlight onPress={() => _linkPressed({"link":"tw"}) }>
                 <Image
                     source={twitter}
                 />
             </TouchableHighlight>
 
-            <TouchableHighlight onPress={() => Linking.openURL('https://www.instagram.com/toronto_entrepreneurs/')}>
+            <TouchableHighlight onPress={() => _linkPressed({"link":"in"}) }>
                 <Image
                     source={instagram}
                 />
             </TouchableHighlight>
 
-            <TouchableHighlight onPress={() => Linking.openURL('https://www.linkedin.com/groups/3851905/')}>
+            <TouchableHighlight onPress={() => _linkPressed({"link":"li"}) }>
                 <Image
                     source={linkedin}
                 />
             </TouchableHighlight>
 
-            <TouchableHighlight onPress={() => Linking.openURL('https://www.youtube.com/watch?v=4fDqoUmmGjM')}>
+            <TouchableHighlight onPress={() => _linkPressed({"link":"yo"}) }>
                 <Image
                     source={youtube}
                 />
@@ -43,6 +46,25 @@ const SocialMidia = props => {
 
         </View>
     );
+};
+
+const _linkPressed = props => {
+
+    if (props.link == "fb"){
+        Linking.openURL(socialmedia.facebook);
+    }
+    if (props.link == "tw"){
+        Linking.openURL(socialmedia.twitter);
+    }
+    if (props.link == "in"){
+        Linking.openURL(socialmedia.instagram);
+    }
+    if (props.link == "li"){
+        Linking.openURL(socialmedia.linkedin);
+    }
+    if (props.link == "yo"){
+        Linking.openURL(socialmedia.youtube);
+    }
 };
 
 const styles = StyleSheet.create({
