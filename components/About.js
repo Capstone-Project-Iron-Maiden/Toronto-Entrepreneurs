@@ -1,21 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+
+import home from '../dbstore/home.json';
+const about = home.about;
 
 const About = props => {
+    
+    const paragraph = about.aboutEvent.map(p => p + '\n' + '\n');
+    
     return (
         <View style={styles.aboutContainer}>
             <View style={styles.aboutItem}>
                 <Text style={styles.aboutText}>
-                    In its 10th year, #TECONF has been the prominent event in the Greater Toronto Area
-                    for empowering and connecting local Entrepreneurs.
-                </Text>
-                <Text style={styles.aboutText}>
-                    We take pride in the community
-                    of Entrepreneurs we have built over the years and look forward to continuing to assist
-                    organizations in building their businesses through connections made through our events.
-                </Text>
-                <Text style={styles.aboutText}>
-                    Soliciting other attendees/exhibitors (“Suitcasing”) will not be permitted at the event.
+                    {paragraph}
                  </Text>
             </View>
         </View>
