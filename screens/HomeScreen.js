@@ -10,9 +10,11 @@ import {
 } from 'react-native';
 
 import { MonoText } from '../components/StyledText';
-
 import About from '../components/About';
 import SocialMidia from '../components/SocialMidia';
+
+import home from '../dbstore/home.json';
+const homescreen = home.homescreen;
 
 export default function HomeScreen() {
   return (
@@ -28,7 +30,8 @@ export default function HomeScreen() {
               require('../assets/images/logo.png')
             }
             style={styles.welcomeImage}
-          />
+          >
+          </Image>
         </View>
 
         <View style={styles.getStartedContainer}>
@@ -37,7 +40,6 @@ export default function HomeScreen() {
           <EventDate />
           <About/>
         </View>
-
       </ScrollView>
 
       <View style={styles.tabBarInfoContainer}>
@@ -58,12 +60,14 @@ function EventPitch() {
       Learn more
     </Text>
   );*/
+  
+  const eventpitch = homescreen.eventpitch.map(p => p + '\n');
 
   return (
     <View >
-      <Text style={styles.eventPichText}>ELEVATING</Text>
-      <Text style={styles.eventPichTextBold}>BUSINESS LEADERS</Text>
-      <Text style={styles.eventPichText}>IN THE GREATER TORONTO AREA</Text>
+      <Text style={styles.eventPichTextBold}>
+        {eventpitch}
+        </Text>
     </View>
 
   );
@@ -75,11 +79,14 @@ function Line() {
 }
 
 function EventDate() {
+
+  const eventdate = homescreen.eventdate.map(p => p + '\n');
+
   return (
     <View>
-      <Text style={styles.eventDateBold} >WED. MAY 6, 2020</Text>
-      <Text style={styles.eventDate} >Mississauga Convention Centre</Text>
-      <Text style={styles.eventDate} >8:30 am - 6:30 pm</Text>
+      <Text style={styles.eventDate}>
+        {eventdate}
+      </Text>
     </View>
   );
 }
@@ -90,22 +97,17 @@ function EventDate() {
   );
 }*/
 
+/*
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
     'https://docs.expo.io/versions/latest/workflow/up-and-running/#cant-see-your-changes'
   );
 }
-
+*/
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
-  },
-  eventPichText: {
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'right',
   },
   eventPichTextBold: {
     color: 'rgba(0,0,0,0.4)',
@@ -118,18 +120,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#e60f29',
     height: 0.5,
     width: 235,
-    marginTop: 10
+    marginTop: -10,
+    marginBottom: 6
   },
   eventDate: {
     color: 'rgba(0,0,0,0.4)',
     fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'right',
-  },
-  eventDateBold: {
-    marginTop: 10,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 16,
     lineHeight: 19,
     textAlign: 'right',
   },
@@ -139,12 +135,6 @@ const styles = StyleSheet.create({
   logo: {
     alignItems: 'center',
     marginTop: 10
-  },
-  sponsors: {
-    backgroundColor: '#e0e0e0',
-    width: 265,
-    height: 100,
-    marginBottom: 100
   },
   welcomeImage: {
     width: 200,
@@ -156,23 +146,6 @@ const styles = StyleSheet.create({
   getStartedContainer: {
     alignItems: 'center',
     marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
   },
   tabBarInfoContainer: {
     position: 'absolute',
@@ -193,18 +166,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fbfbfb',
     paddingVertical: 10,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
   },
   helpLink: {
     paddingVertical: 15,
