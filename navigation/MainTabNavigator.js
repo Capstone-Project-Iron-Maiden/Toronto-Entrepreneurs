@@ -8,6 +8,7 @@ import HomeScreen from '../screens/HomeScreen';
 import ScheduleScreen from '../screens/ScheduleScreen';
 import ExhibitorScreen from '../screens/ExhibitorScreen';
 import TicketScreen from '../screens/TicketScreen';
+import SpeakerScreen from '../screens/SpeakerScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -86,6 +87,34 @@ ExhibitorStack.navigationOptions = {
 ExhibitorStack.path = '';
 //Exhibitor end
 
+//Speakers start
+
+const SpeakerStack = createStackNavigator(
+  {
+    Home: SpeakerScreen,
+  },
+  config
+);
+
+SpeakerStack.navigationOptions = {
+  tabBarLabel: 'Speaker',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? 'ios-people'
+          : 'md-people'
+      }
+    />
+  ),
+};
+
+SpeakerStack.path = '';
+//speakes end
+
+
+
 //Tickets start
 const SettingsStack = createStackNavigator(
   {
@@ -115,7 +144,8 @@ const tabNavigator = createBottomTabNavigator({
   HomeStack,
   ScheduleStack,
   ExhibitorStack,
-  SettingsStack,
+  SpeakerStack,
+  SettingsStack
 });
 
 tabNavigator.path = '';
