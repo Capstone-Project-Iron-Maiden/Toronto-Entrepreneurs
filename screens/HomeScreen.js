@@ -9,8 +9,6 @@ import {
   View,
 } from 'react-native';
 
-import { MonoText } from '../components/StyledText';
-import About from '../components/About';
 import SocialMidia from '../components/SocialMidia';
 
 import home from '../dbstore/home.json';
@@ -24,20 +22,15 @@ export default function HomeScreen() {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         <View style={styles.logo}>
-          <Image
-            //app logo
-            source={
-              require('../assets/images/logo.png')
-            }
-            style={styles.welcomeImage}
-          >
-          </Image>
+            <Image style={styles.welcomeImage} source={{ uri: `${homescreen.general.logo}` }} />
         </View>
 
         <View style={styles.getStartedContainer}>
-          <EventPitch />
+          <Description />
           <Line />
-          <EventDate />
+          <Date />
+          <Location />
+          <Time />
           <About/>
         </View>
       </ScrollView>
@@ -53,23 +46,28 @@ HomeScreen.navigationOptions = {
   header: null,
 };
 
-function EventPitch() {
-
-  /*const learnMoreButton = (
-    <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-      Learn more
-    </Text>
-  );*/
+function About(){
+    
+  const paragraph = homescreen.about.aboutEvent.map(p => p + '\n' + '\n');
   
-  const eventpitch = homescreen.eventpitch.map(p => p + '\n');
+  return (
+      <View style={styles.aboutContainer}>
+          <View style={styles.aboutItem}>
+              <Text style={styles.aboutText}>
+                  {paragraph}
+               </Text>
+          </View>
+      </View>
+  );
+};
 
+function Description() {
   return (
     <View >
-      <Text style={styles.eventPichTextBold}>
-        {eventpitch}
+      <Text style={styles.descriptionTextBold}>
+        {homescreen.general.description}
         </Text>
     </View>
-
   );
 }
 function Line() {
@@ -78,14 +76,31 @@ function Line() {
   );
 }
 
-function EventDate() {
-
-  const eventdate = homescreen.eventdate.map(p => p + '\n');
+function Date() {
 
   return (
     <View>
       <Text style={styles.eventDate}>
-        {eventdate}
+        {homescreen.general.date}
+      </Text>
+    </View>
+  );
+}
+function Location() {
+  return (
+    <View>
+      <Text style={styles.eventLocation}>
+        {homescreen.general.location}
+      </Text>
+    </View>
+  );
+}
+function Time() {
+
+  return (
+    <View>
+      <Text style={styles.eventTime}>
+        {homescreen.general.time}
       </Text>
     </View>
   );
@@ -109,21 +124,34 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff'
   },
-  eventPichTextBold: {
+  descriptionTextBold: {
     color: 'rgba(0,0,0,0.4)',
     fontSize: 14,
     lineHeight: 19,
     textAlign: 'right',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    paddingBottom: 15
   },
   styleLine: {
     backgroundColor: '#e60f29',
     height: 0.5,
-    width: 235,
+    width: 275,
     marginTop: -10,
     marginBottom: 6
   },
   eventDate: {
+    color: 'rgba(0,0,0,0.4)',
+    fontSize: 14,
+    lineHeight: 19,
+    textAlign: 'right',
+  },
+  eventLocation: {
+    color: 'rgba(0,0,0,0.4)',
+    fontSize: 14,
+    lineHeight: 19,
+    textAlign: 'right',
+  },
+  eventTime: {
     color: 'rgba(0,0,0,0.4)',
     fontSize: 14,
     lineHeight: 19,
@@ -144,7 +172,7 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
   getStartedContainer: {
-    alignItems: 'center',
+    //alignItems: 'center',
     marginHorizontal: 50,
   },
   tabBarInfoContainer: {
@@ -173,5 +201,26 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7',
-  }
+  },
+  aboutContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    paddingTop: 20,
+    width: '100%',
+    height: '100%',
+    paddingBottom: 70
+},
+aboutItem: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderWidth: 5,
+    borderColor: 'white'
+},
+aboutText: {
+    fontSize: 14,
+    color: '#878786',
+    textAlign: 'justify',
+    paddingBottom: 5
+
+}
 });

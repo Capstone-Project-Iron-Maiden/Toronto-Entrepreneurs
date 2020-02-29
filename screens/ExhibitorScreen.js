@@ -11,11 +11,8 @@ import {
     Linking
 } from 'react-native';
 
-import SunLife from '../assets/images/sponsors/SunLife.png';
-import Distinctm from '../assets/images/sponsors/Distinctm.png';
-import Cyber from '../assets/images/sponsors/Cyber.png';
 import TabBarExhibitor from '../components/TabBarExhibitor';
-
+import exhibitors from '../dbstore/exhibitor.json';
 
 export default function ExhibitorScreen() {
     return (
@@ -23,16 +20,10 @@ export default function ExhibitorScreen() {
             <ScrollView
                 style={styles.container}
                 contentContainerStyle={styles.contentContainer}>
-
-                <View style={styles.getStartedContainer}>
-                    <Title />
-                    <Line />
-                    <Event />
-                    <Sponsors />
+                <View>
+                    <Exibitor />
                 </View>
-
             </ScrollView>
-
             <View style={styles.tabBarInfoContainer}>
                 <TabBarExhibitor />
             </View>
@@ -44,58 +35,46 @@ ExhibitorScreen.navigationOptions = {
     header: null,
 };
 
-function Title() {
-    return (
-        <View >
-            <Text style={styles.Title}>SPONSORS & EXHIBITORS</Text>
+function Exibitor() {
+
+    var jp = require('jsonpath');
+
+    var sponsor = jp.query(exhibitors.exhibitorscreen, '$.exibitor[?(@.sponsor==true)]');
+    var sponsorTrueHTML = "";
+    var sponsorTrueHTML = sponsor.map((p) =>
+        <View>
+            <TouchableHighlight onPress={() => Linking.openURL(p.link)}>
+                <Image style={styles.logo} source={{ uri: `${p.logo}` }} />
+            </TouchableHighlight>
         </View>
     );
-}
-function Line() {
-    return (
-        <View style={styles.styleLine} />
-    );
-}
-function Event() {
-    return (
+
+
+    var sponsor = jp.query(exhibitors.exhibitorscreen, '$.exibitor[?(@.sponsor==false)]');
+    var sponsorFalseHTML = "";
+    var sponsorFalseHTML = sponsor.map((p) =>
         <View>
-            <Text style={styles.Venue}>Partial List of 2020 Exhibitors</Text>
+            <TouchableHighlight onPress={() => Linking.openURL(p.link)}>
+                <Image style={styles.logo} source={{ uri: `${p.logo}` }} />
+            </TouchableHighlight>
         </View>
     );
-}
-function Sponsors() {
+
     return (
         <View>
-            <View style={styles.LogoView}>
-                <TouchableHighlight onPress={() => Linking.openURL('https://www.sunlife.ca/')}>
-                    <Image source={SunLife} />
-                </TouchableHighlight>
-                <View style={styles.styleLine2}></View>
-                <View >
-                    <Text style={styles.SponsorTitle}>PLATINUM SPONSOR</Text>
-                </View>
+            <View style={styles.getStartedContainer}>
+                <Text style={styles.Title}>{exhibitors.exhibitorscreen.general.title}</Text>
+                <View style={styles.styleLine} />
+                <Text style={styles.Venue}>{exhibitors.exhibitorscreen.general.subtitle}</Text>
             </View>
-
-            <View style={styles.LogoView}>
-                <TouchableHighlight onPress={() => Linking.openURL('https://www.districtm.net/')}>
-                    <Image source={Distinctm} />
-                </TouchableHighlight>
-                <View style={styles.styleLine2}></View>
-                <View >
-                    <Text style={styles.SponsorTitle}>GOLD SPONSOR</Text>
-                </View>
+            <View style={styles.getStartedContainer}>
+                <Text style={styles.exibitorSubTitle}>EVENT SPONSORS</Text>
+                {sponsorTrueHTML}
             </View>
-
-            <View style={styles.LogoView}>
-                <TouchableHighlight onPress={() => Linking.openURL('https://www.districtm.net/')}>
-                    <Image source={Cyber} />
-                </TouchableHighlight>
-                <View style={styles.styleLine2}></View>
-                <View >
-                    <Text style={styles.SponsorTitle}>GOLD SPONSOR</Text>
-                </View>
+            <View style={styles.getStartedContainer}>
+                <Text style={styles.exibitorSubTitle}>EVENT EXIBITORS</Text>
+                {sponsorFalseHTML}
             </View>
-
         </View>
     );
 }
@@ -105,6 +84,25 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff'
+    },
+    exibitorSubTitle: {
+        color: 'black',
+        //backgroundColor: '#356c8c',
+        backgroundColor: 'lightgray',
+        fontSize: 20,
+        lineHeight: 30,
+        textAlign: 'center',
+        marginTop: 30,
+        width: '100%'
+    },
+    logo: {
+        width: 300,
+        height: 100,
+        borderRadius: 150,
+        overflow: "hidden",
+        alignContent: 'center',
+        alignSelf: 'center',
+        resizeMode: 'contain'
     },
     Title: {
         color: '#414141',
@@ -139,7 +137,6 @@ const styles = StyleSheet.create({
         height: 0.5,
         width: 100,
         marginTop: 10
-
     },
     contentContainer: {
         paddingTop: 30,
@@ -150,11 +147,6 @@ const styles = StyleSheet.create({
         width: 265,
         height: 100,
         marginBottom: 100
-    },
-    LogoView: {
-        width: '100%',
-        paddingTop: 10,
-        alignItems: 'center'
     },
     getStartedContainer: {
         alignItems: 'center',

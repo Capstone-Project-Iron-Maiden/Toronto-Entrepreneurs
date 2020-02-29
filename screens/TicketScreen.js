@@ -10,10 +10,8 @@ import {
     Linking
 } from 'react-native';
 
-import boy from '../assets/images/tickets/boy29.png';
-import girl from '../assets/images/tickets/girl69.png';
-import man from '../assets/images/tickets/man129.png';
-
+import tickets from '../dbstore/ticket.json';
+const ticketscreen = tickets.ticketscreen;
 
 export default function TicketScreen() {
     return (
@@ -23,8 +21,6 @@ export default function TicketScreen() {
                 contentContainerStyle={styles.contentContainer}>
 
                 <View style={styles.getStartedContainer}>
-                    <Title />
-                    <Line />
                     <Tickets />
                 </View>
 
@@ -37,76 +33,35 @@ TicketScreen.navigationOptions = {
     header: null,
 };
 
-function Title() {
-    return (
-        <View >
-            <Text style={styles.Title}>TICKET OPTIONS</Text>
+function Tickets() {
+
+    var ticketHTML = ticketscreen.options.map((p) =>
+
+        <View style={styles.FotoView}>
+            <View>
+                <Image style={styles.Foto}
+                    source={{ uri: `${p.picture}` }} />
+            </View>
+            <View >
+                <Text style={styles.Price}>{p.value}</Text>
+                <Text style={styles.Description}> {p.desc} </Text>
+            </View>
+            <TouchableHighlight onPress={() => Linking.openURL(p.link)}>
+                <View style={styles.Button}>
+                    <Text style={styles.TextButton}>{p.labelbtn}</Text>
+                </View>
+            </TouchableHighlight>
         </View>
     );
-}
-function Line() {
-    return (
-        <View style={styles.styleLine} />
-    );
-}
 
-function Tickets() {
     return (
         <View>
-
-            <View style={styles.FotoView}>
-                <View style={styles.Foto}>
-                    <Image source={boy} />
-                </View>
-                <View >
-                    <Text style={styles.Price}>$29.00</Text>
-                    <Text style={styles.Description}>
-                        Tradeshow, Networking + Speaker Admission
-                    </Text>
-                </View>
-                <TouchableHighlight onPress={() => Linking.openURL('https://www.eventbrite.ca/e/toronto-entrepreneurs-conference-tradeshow-may-6th-2020-tickets-84615199339')}>
-                    <View style={styles.Button}>
-                        <Text style={styles.TextButton}>BUY NOW</Text>
-                    </View>
-                </TouchableHighlight>
+            <View >
+                <Text style={styles.Title}>{ticketscreen.general.title}</Text>
+                <View style={styles.styleLine} />
             </View>
-
-
-            <View style={styles.FotoView}>
-                <View style={styles.Foto}>
-                    <Image source={girl} />
-                </View>
-                <View >
-                    <Text style={styles.Price}>$69.00</Text>
-                    <Text style={styles.Description}>
-                        Tradeshow, Networking + Speaker Admission + Lunch
-                    </Text>
-                </View>
-
-                <TouchableHighlight onPress={() => Linking.openURL('https://www.eventbrite.ca/e/toronto-entrepreneurs-conference-tradeshow-may-6th-2020-tickets-84615199339')}>
-                    <View style={styles.Button}>
-                        <Text style={styles.TextButton}>BUY NOW</Text>
-                    </View>
-                </TouchableHighlight>
-
-            </View>
-
-            <View style={styles.FotoView}>
-                <View style={styles.Foto}>
-                    <Image source={man} />
-                </View>
-
-                <View >
-                    <Text style={styles.Price}>$129.00</Text>
-                    <Text style={styles.Description}>
-                        Tradeshow, Networking + Speaker Admission + Cocktail Reception + Preferred Seating
-                    </Text>
-                </View>
-                <TouchableHighlight onPress={() => Linking.openURL('https://www.eventbrite.ca/e/toronto-entrepreneurs-conference-tradeshow-may-6th-2020-tickets-84615199339')}>
-                    <View style={styles.Button}>
-                        <Text style={styles.TextButton}>BUY NOW</Text>
-                    </View>
-                </TouchableHighlight>
+            <View>
+                {ticketHTML}
             </View>
         </View>
     );
@@ -160,8 +115,9 @@ const styles = StyleSheet.create({
         paddingBottom: 30
     },
     Foto: {
-        width: '100%',
-        height: 201
+        width: 250,
+        height: 201,
+        borderRadius: 3
     },
     FotoView: {
         width: '100%',
