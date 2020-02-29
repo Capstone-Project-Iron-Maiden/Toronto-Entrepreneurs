@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, View, TouchableHighlight, Image, Linking, Text } from 'react-native';
 
 
-import registerNow from '../assets/images/registerNow.png';
-import tradeShow from '../assets/images/tradeShow.png';
+//import registerNow from '../assets/images/registerNow.png';
+//import tradeShow from '../assets/images/tradeShow.png';
 
 const TabBarExhibitor = props => {
     return (
@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        paddingLeft: 20,
-        paddingRight: 20
+        paddingLeft: 25,
+        paddingRight: 25
     },
     TextView:{
         backgroundColor: '#999997',

@@ -8,7 +8,7 @@ import linkedin from '../assets/images/linkedin.png';
 import youtube from '../assets/images/youtube.png';
 
 import home from '../dbstore/home.json';
-const socialmedia = home.socialmedia;
+const socialmedia = home.homescreen.socialmedia;
 
 const SocialMidia = props => {
     return (
