@@ -11,8 +11,20 @@ import {
     Linking
 } from 'react-native';
 
+import * as FileSystem from 'expo-file-system';
 import TabBarExhibitor from '../components/TabBarExhibitor';
-import exhibitors from '../dbstore/exhibitor.json';
+//import exhibitors from '../dbstore/exhibitor.json';
+
+let exhibitorJSONData = {};
+const path = FileSystem.documentDirectory + 'exhibitordata.json';
+FileSystem.readAsStringAsync(path).then((data) => {
+  
+  console.log('Reading EXHIBITOR DATA from file');
+  exhibitorJSONData = JSON.parse(data);
+
+}).catch(function (error) {
+  console.log('Error reading file:' + error);
+});
 
 export default function ExhibitorScreen() {
     return (
@@ -39,7 +51,7 @@ function Exibitor() {
 
     var jp = require('jsonpath');
 
-    var sponsor = jp.query(exhibitors.exhibitorscreen, '$.exibitor[?(@.sponsor==true)]');
+    var sponsor = jp.query(exhibitorJSONData, '$.exibitor[?(@.sponsor==true)]');
     var sponsorTrueHTML = "";
     var sponsorTrueHTML = sponsor.map((p) =>
         <View>
@@ -50,7 +62,7 @@ function Exibitor() {
     );
 
 
-    var sponsor = jp.query(exhibitors.exhibitorscreen, '$.exibitor[?(@.sponsor==false)]');
+    var sponsor = jp.query(exhibitorJSONData, '$.exibitor[?(@.sponsor==false)]');
     var sponsorFalseHTML = "";
     var sponsorFalseHTML = sponsor.map((p) =>
         <View>
@@ -63,9 +75,9 @@ function Exibitor() {
     return (
         <View>
             <View style={styles.getStartedContainer}>
-                <Text style={styles.Title}>{exhibitors.exhibitorscreen.general.title}</Text>
+                <Text style={styles.Title}>SPONSORS & EXHIBITORS</Text>
                 <View style={styles.styleLine} />
-                <Text style={styles.Venue}>{exhibitors.exhibitorscreen.general.subtitle}</Text>
+                <Text style={styles.Venue}>{exhibitorJSONData.general.subtitle}</Text>
             </View>
             <View style={styles.getStartedContainer}>
                 <Text style={styles.exibitorSubTitle}>EVENT SPONSORS</Text>

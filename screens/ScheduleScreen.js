@@ -7,12 +7,25 @@ import {
     Text,
     View,
     TouchableHighlight,
+    Linking
 } from 'react-native';
-
+import * as FileSystem from 'expo-file-system';
 import TabBarSchedule from '../components/TabBarSchedule';
+
 //json file
-import schedule from '../dbstore/schedule.json';
-const schedulescreen = schedule.schedulescreen;
+//import schedule from '../dbstore/schedule.json';
+//const schedulescreen = schedule.schedulescreen;
+
+let scheduleJSONData = {};
+const path = FileSystem.documentDirectory + 'scheduledata.json';
+FileSystem.readAsStringAsync(path).then((data) => {
+
+    console.log('Reading SCHEDULE DATA from file');
+    scheduleJSONData = JSON.parse(data);
+
+}).catch(function (error) {
+    console.log('Error reading file:' + error);
+});
 
 export default function ScheduleScreen() {
     return (
@@ -39,7 +52,7 @@ function Event() {
 
     let topicHTML = [];
 
-    schedulescreen.topic.forEach(p => {
+    scheduleJSONData.topic.forEach(p => {
         if (p.networking == false) {
 
             topicHTML.push(
@@ -74,7 +87,7 @@ function Event() {
     return (
         <View>
             <View >
-                <Text style={styles.Title1}>{schedulescreen.general.title}</Text>
+                <Text style={styles.Title1}>EVENT{'\n'}SCHEDULE</Text>
                 <View style={styles.styleLine1} />
             </View>
             {topicHTML}

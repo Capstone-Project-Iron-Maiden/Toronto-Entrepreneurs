@@ -11,14 +11,27 @@ import {
     Linking
 } from 'react-native';
 
+import * as FileSystem from 'expo-file-system';
 import TabBarIcon from '../components/TabBarIcon';
 
 //https://www.npmjs.com/package/jsonpath
 //npm install jsonpath
 //instead of IMPORT .... use REQUIRE ... example: var jp = require('jsonpath');
 
-import speakers from '../dbstore/speaker.json';
-const speakerscreen = speakers.speakerscreen;
+//import speakers from '../dbstore/speaker.json';
+//const speakerscreen = speakers.speakerscreen;
+
+let speakerJSONData = {};
+const path = FileSystem.documentDirectory + 'speakerdata.json';
+FileSystem.readAsStringAsync(path).then((data) => {
+
+    console.log('Reading SPEAKER DATA from file');
+    speakerJSONData = JSON.parse(data);
+
+}).catch(function (error) {
+    console.log('Error reading file:' + error);
+});
+
 
 export default function SpeakerScreen() {
     return (
@@ -42,7 +55,7 @@ function Speakers() {
 
     var jp = require('jsonpath');
 
-    var keynote = jp.query(speakers.speakerscreen, '$.speaker[?(@.keynotespeaker==true)]');
+    var keynote = jp.query(speakerJSONData, '$.speaker[?(@.keynotespeaker==true)]');
     var keyspeakersTRUE = "";
     var keyspeakersTRUE = keynote.map((p) =>
         <View>
@@ -63,7 +76,7 @@ function Speakers() {
         </View>
     );
 
-    var keynote = jp.query(speakers.speakerscreen, '$.speaker[?(@.keynotespeaker==false)]');
+    var keynote = jp.query(speakerJSONData, '$.speaker[?(@.keynotespeaker==false)]');
     var keyspeakersFALSE = "";
     var keyspeakersFALSE = keynote.map((p) =>
         <View>
@@ -86,12 +99,12 @@ function Speakers() {
     return (
         <View>
             <View >
-                <Text style={styles.Title}>{speakerscreen.general.keynotetitle}</Text>
+                <Text style={styles.Title}>KEYNOTE{'\n'}SPEAKERS</Text>
                 <View style={styles.styleLine} />
             </View>
             {keyspeakersTRUE}
             <View >
-                <Text style={styles.TitleSpeaker}>{speakerscreen.general.speakertitle}</Text>
+                <Text style={styles.TitleSpeaker}>SPEAKERS</Text>
                 <View style={styles.styleLine} />
             </View>
             {keyspeakersFALSE}
@@ -158,8 +171,9 @@ const styles = StyleSheet.create({
     styleLine: {
         backgroundColor: '#414141',
         height: 0.5,
-        width: 275,
-        marginTop: 10
+        width: 235,
+        marginTop: 10,
+        alignSelf: 'center'
     },
     styleQuote: {
         color: '#414141',

@@ -1,4 +1,3 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {
     Image,
@@ -9,9 +8,21 @@ import {
     TouchableHighlight,
     Linking
 } from 'react-native';
+import * as FileSystem from 'expo-file-system';
 
-import tickets from '../dbstore/ticket.json';
-const ticketscreen = tickets.ticketscreen;
+//import tickets from '../dbstore/ticket.json';
+//const ticketscreen = tickets.ticketscreen;
+
+let ticketJSONData = {};
+const path = FileSystem.documentDirectory + 'ticketdata.json';
+FileSystem.readAsStringAsync(path).then((data) => {
+
+    console.log('Reading TICKET DATA from file');
+    ticketJSONData = JSON.parse(data);
+
+}).catch(function (error) {
+    console.log('Error reading file:' + error);
+});
 
 export default function TicketScreen() {
     return (
@@ -35,7 +46,7 @@ TicketScreen.navigationOptions = {
 
 function Tickets() {
 
-    var ticketHTML = ticketscreen.options.map((p) =>
+    var ticketHTML = ticketJSONData.options.map((p) =>
 
         <View style={styles.FotoView}>
             <View>
@@ -57,7 +68,7 @@ function Tickets() {
     return (
         <View>
             <View >
-                <Text style={styles.Title}>{ticketscreen.general.title}</Text>
+                <Text style={styles.Title}>TICKET{'\n'}OPTIONS</Text>
                 <View style={styles.styleLine} />
             </View>
             <View>
@@ -108,7 +119,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#414141',
         height: 0.5,
         width: 235,
-        marginTop: 10
+        marginTop: 10,
+        alignSelf: 'center'
     },
     contentContainer: {
         paddingTop: 30,

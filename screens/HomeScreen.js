@@ -7,38 +7,59 @@ import {
   StyleSheet,
   Text,
   View,
+  AsyncStorage
 } from 'react-native';
-
 import SocialMidia from '../components/SocialMidia';
+import { firebaseLogin, registerForPushNotifications} from '../api/AppAPI';
+import * as FileSystem from 'expo-file-system';
 
-import home from '../dbstore/home.json';
-const homescreen = home.homescreen;
+//import {registerForPushNotifications} from './PushNotification';
+
+firebaseLogin();
+
+//import home from '../dbstore/home.json';
+//var homescreen = home.homescreen;
+//let homescreen = '';
+
+let homeJSONData = {};
+const path = FileSystem.documentDirectory + 'homedata.json';
+FileSystem.readAsStringAsync(path).then((data) => {
+  
+  console.log('Reading HOME DATA from file');
+  homeJSONData = JSON.parse(data);
+
+}).catch(function (error) {
+  console.log('Error reading file:' + error);
+});
 
 export default function HomeScreen() {
+
+  registerForPushNotifications();
+
   return (
     <View style={styles.container}>
-      
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
-        <View style={styles.logo}>
-            <Image style={styles.welcomeImage} source={{ uri: `${homescreen.general.logo}` }} />
-        </View>
 
-        <View style={styles.getStartedContainer}>
-          <Description />
-          <Line />
-          <Date />
-          <Location />
-          <Time />
-          <About/>
-        </View>
-      </ScrollView>
-
-      <View style={styles.tabBarInfoContainer}>
-        <SocialMidia />
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}>
+      <View style={styles.logo}>
+        <Image style={styles.welcomeImage} source={{ uri: `${homeJSONData.general.logo}` }} />
       </View>
+
+      <View style={styles.getStartedContainer}>
+        <Description />
+        <Line />
+        <Date />
+        <Location />
+        <Time />
+        <About />
+      </View>
+    </ScrollView>
+
+    <View style={styles.tabBarInfoContainer}>
+      <SocialMidia />
     </View>
+  </View>
   );
 }
 
@@ -46,18 +67,18 @@ HomeScreen.navigationOptions = {
   header: null,
 };
 
-function About(){
-    
-  const paragraph = homescreen.about.aboutEvent.map(p => p + '\n' + '\n');
-  
+function About() {
+
+  const paragraph = homeJSONData.about.aboutEvent.map(p => p + '\n' + '\n');
+
   return (
-      <View style={styles.aboutContainer}>
-          <View style={styles.aboutItem}>
-              <Text style={styles.aboutText}>
-                  {paragraph}
-               </Text>
-          </View>
+    <View style={styles.aboutContainer}>
+      <View style={styles.aboutItem}>
+        <Text style={styles.aboutText}>
+          {paragraph}
+        </Text>
       </View>
+    </View>
   );
 };
 
@@ -65,8 +86,8 @@ function Description() {
   return (
     <View >
       <Text style={styles.descriptionTextBold}>
-        {homescreen.general.description}
-        </Text>
+        {homeJSONData.general.description}
+      </Text>
     </View>
   );
 }
@@ -81,7 +102,7 @@ function Date() {
   return (
     <View>
       <Text style={styles.eventDate}>
-        {homescreen.general.date}
+        {homeJSONData.general.date}
       </Text>
     </View>
   );
@@ -90,7 +111,7 @@ function Location() {
   return (
     <View>
       <Text style={styles.eventLocation}>
-        {homescreen.general.location}
+        {homeJSONData.general.location}
       </Text>
     </View>
   );
@@ -100,7 +121,7 @@ function Time() {
   return (
     <View>
       <Text style={styles.eventTime}>
-        {homescreen.general.time}
+        {homeJSONData.general.time}
       </Text>
     </View>
   );
@@ -209,18 +230,18 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     paddingBottom: 70
-},
-aboutItem: {
+  },
+  aboutItem: {
     justifyContent: 'space-around',
     alignItems: 'center',
     borderWidth: 5,
     borderColor: 'white'
-},
-aboutText: {
+  },
+  aboutText: {
     fontSize: 14,
     color: '#878786',
     textAlign: 'justify',
     paddingBottom: 5
 
-}
+  }
 });
